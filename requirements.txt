@@ -1,0 +1,7 @@
+pyttsx3
+SpeechRecognition
+pyaudio
+google-generativeai
+psutil
+Pillow
+pyinstaller
