@@ -1,0 +1,27 @@
+name: Build SHAULA
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Installa dipendenze
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyttsx3 SpeechRecognition pyaudio google-generativeai psutil Pillow pyinstaller
+
+      - name: Compila SHAULA.exe
+        run: |
+          pyinstaller --onefile --windowed --name SHAULA --add-data "config.json;." shaula.py
+
+      - name: Carica exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: SHAULA-Windows
+          path: dist/SHAULA.exe
